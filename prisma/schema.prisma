@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -36,4 +30,17 @@ enum VoiceCategory {
 model Voice {
   id    String  @id @default(cuid())
   orgId String?
+
+  name        String
+  description String?
+  category    VoiceCategory @default(GENERAL)
+  language    String        @default("en-US")
+  variant     VoiceVariant
+  r2ObjectKey String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([variant])
+  @@index([orgId])
 }
