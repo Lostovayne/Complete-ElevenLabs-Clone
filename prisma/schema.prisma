@@ -38,9 +38,32 @@ model Voice {
   variant     VoiceVariant
   r2ObjectKey String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  generations Generation[]
 
   @@index([variant])
   @@index([orgId])
+}
+
+model Generation {
+  id    String @id @default(cuid())
+  orgId String
+
+  voiceId     String?
+  voice       Voice?  @relation(fields: [voiceId], references: [id], onDelete: SetNull)
+  text        String
+  voiceName   String
+  r2ObjectKey String?
+
+  temperature       Float
+  topP              Float
+  topK              Float
+  repetitionPenalty Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orgId])
+  @@index([voiceId])
 }

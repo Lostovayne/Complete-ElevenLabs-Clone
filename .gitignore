@@ -35,7 +35,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-
+.env
 
 # vercel
 .vercel
@@ -48,3 +48,8 @@ next-env.d.ts
 /.clerk/
 
 /src/generated/prisma
+
+#Locks files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
