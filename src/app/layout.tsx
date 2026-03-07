@@ -28,8 +28,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
-          {children}
           <Toaster position="top-right" richColors />
+          {children}
         </body>
       </html>
     </ClerkProvider>
