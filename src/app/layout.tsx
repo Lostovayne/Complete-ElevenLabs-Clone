@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
@@ -29,7 +30,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
           <Toaster position="top-right" richColors />
-          {children}
+          <TooltipProvider>{children}</TooltipProvider>
         </body>
       </html>
     </ClerkProvider>
