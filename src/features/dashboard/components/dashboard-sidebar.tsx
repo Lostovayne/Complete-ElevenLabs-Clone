@@ -47,11 +47,7 @@ interface NavSectionProps {
 function NavSection({ label, items, pathname }: NavSectionProps) {
   return (
     <SidebarGroup>
-      {label && (
-        <SidebarGroupLabel className="text-[13px] uppercase">
-          {label}
-        </SidebarGroupLabel>
-      )}
+      {label && <SidebarGroupLabel className="text-[13px] uppercase">{label}</SidebarGroupLabel>}
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
@@ -158,11 +154,9 @@ export function DashboardSidebar() {
                     "w-full! group-data-[collapsible=icon]:w-auto! group-data-[collapsible=icon]:flex! group-data-[collapsible=icon]:justify-center!",
                   organizationSwitcherTrigger:
                     "w-full! justify-between! bg-white! border! border-border! rounded-md! pl-1! pr-2! py-1! gap-3! group-data-[collapsible=icon]:w-auto! group-data-[collapsible=icon]:p-1! shadow-[0px_1px_1px_0px_rgba(44,54,53,0.03)]!",
-                  organizationSwitcherPopoverCard:
-                    "z-[10000]! pointer-events-auto!",
+                  organizationSwitcherPopoverCard: "z-[10000]! pointer-events-auto!",
                   organizationSwitcherPopoverActions: "pointer-events-auto!",
-                  organizationSwitcherPopoverActionButton:
-                    "pointer-events-auto!",
+                  organizationSwitcherPopoverActionButton: "pointer-events-auto!",
                   organizationPreview: "gap-2!",
                   organizationPreviewAvatarBox: "size-6! rounded-sm!",
                   organizationPreviewTextContainer:
