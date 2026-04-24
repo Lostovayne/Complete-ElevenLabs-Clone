@@ -47,7 +47,9 @@ interface NavSectionProps {
 function NavSection({ label, items, pathname }: NavSectionProps) {
   return (
     <SidebarGroup>
-      {label && <SidebarGroupLabel className="text-[13px] uppercase">{label}</SidebarGroupLabel>}
+      {label && (
+        <SidebarGroupLabel className="text-[13px] uppercase">{label}</SidebarGroupLabel>
+      )}
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
@@ -131,6 +133,7 @@ export function DashboardSidebar() {
           <Image
             src="/logo.svg"
             alt="Resonance Logo"
+            loading="eager"
             width={24}
             height={24}
             className="rounded-sm"
