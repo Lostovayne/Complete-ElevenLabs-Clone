@@ -1,14 +1,9 @@
 "use client";
 
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { DashboardView } from "@/features/dashboard/views/dashboard-view";
 
 const DashboardPage = () => {
-  return (
-    <div className="flex flex-col justify-center items-center min-h-screen ">
-      <SidebarTrigger className="mb-4" />
-      owo
-    </div>
-  );
+  return <DashboardView />;
 };
 
 export default DashboardPage;

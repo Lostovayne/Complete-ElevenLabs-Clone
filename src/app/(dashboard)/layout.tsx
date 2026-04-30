@@ -3,7 +3,7 @@ import { DashboardSidebar } from "@/features/dashboard/components/dashboard-side
 import { cookies } from "next/headers";
 
 export default async function DashboardLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {

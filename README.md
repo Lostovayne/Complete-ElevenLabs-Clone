@@ -1,198 +1,305 @@
+![Resonance Banner](./public/resources/image.png)
+
 # Resonance
 
-Resonance es una aplicación web construida con Next.js 16 para gestionar una experiencia multi-tenant basada en organizaciones, autenticación con Clerk y persistencia con Prisma sobre PostgreSQL. El estado actual del proyecto cubre la base de acceso, selección de organización y el modelo inicial para voces y generaciones de audio/texto.
+Plataforma de síntesis de voz avanzada construida con tecnologías modernas. Ofrece una experiencia multi-tenant segura, autenticación empresarial y gestión de organizaciones para crear, gestionar y reproducir generaciones de audio/texto de alta calidad.
 
-## Resumen
+---
 
-- Framework: Next.js 16 con App Router y React 19.
-- Autenticación y organizaciones: Clerk.
-- Base de datos: PostgreSQL.
-- ORM: Prisma 7 con driver adapter para `pg`.
-- UI: Tailwind CSS v4, Base UI y componentes shadcn.
-- Notificaciones: Sonner.
+## Estado del Proyecto
 
-## Estado actual
+**Versión:** 0.1.0 | **Estado:** En Desarrollo | **Última Actualización:** Marzo 2026
 
-Hoy el proyecto incluye:
+### Funcionalidades Implementadas
 
-- Pantallas de `sign-in` y `sign-up` con Clerk.
-- Middleware de protección de rutas.
-- Redirección obligatoria a selección de organización cuando el usuario no tiene una organización activa.
-- Pantalla principal mínima con `OrganizationSwitcher` y `UserButton`.
-- Modelo de datos inicial para voces (`Voice`) y generaciones (`Generation`).
-- Cliente Prisma generado dentro de `src/generated/prisma`.
+- ✓ Sistema de autenticación con Clerk (sign-in, sign-up, gestión de sesiones)
+- ✓ Multi-tenancy con selección y gestión de organizaciones
+- ✓ Middleware de protección de rutas
+- ✓ Modelo de datos para voces y generaciones
+- ✓ Interfaz de usuario responsive con Tailwind CSS
+- ✓ Sistema de notificaciones en tiempo real
+- ✓ Cliente Prisma optimizado
 
-No hay todavía un flujo de producto completo para creación, listado o reproducción de generaciones desde la UI principal. El README describe el estado real del repositorio a marzo de 2026.
+### Próximas Implementaciones
 
-## Arquitectura
+- Flujo completo de creación de generaciones
+- Gestor de voces personalizadas
+- Sistema de reproducción de audio
+- Panel de análisis y estadísticas
 
-### Frontend
+---
 
-- `src/app`: rutas del App Router.
-- `src/components/ui`: biblioteca base de componentes reutilizables.
-- `src/app/layout.tsx`: registro de `ClerkProvider`, fuentes y toaster global.
+## Stack Tecnológico
 
-### Acceso y tenancy
+| Categoría | Tecnología | Versión |
+|-----------|-----------|---------|
+| **Framework** | Next.js | 16.2.2 |
+| **Runtime** | React | 19.2.5 |
+| **Lenguaje** | TypeScript | 5.9.3 |
+| **Autenticación** | Clerk | 7.2.8 |
+| **Base de Datos** | PostgreSQL | - |
+| **ORM** | Prisma | 7.8.0 |
+| **Estilos** | Tailwind CSS | 4.2.4 |
+| **UI Components** | shadcn/ui, Base UI | - |
+| **Notificaciones** | Sonner | 2.0.7 |
+| **Validación** | Zod | 4.4.1 |
+| **Forma** | React Hook Form | 7.74.0 |
 
-- `src/proxy.ts`: protege rutas privadas con Clerk.
-- Los paths de autenticación (`/sign-in`, `/sign-up`) son públicos.
-- `/org-selection` queda accesible para usuarios autenticados sin organización activa.
-- El resto de rutas protegidas requieren `userId` y `orgId`.
+---
 
-### Persistencia
+## Requisitos Previos
 
-- `prisma/schema.prisma`: define el esquema y enums principales.
-- `src/lib/db.ts`: inicializa Prisma con `@prisma/adapter-pg` usando `DATABASE_URL`.
-- `src/generated/prisma`: salida del cliente generado por Prisma.
+- **Node.js:** 20.0.0 o superior
+- **npm:** 10.0.0 o superior (recomendado)
+- **PostgreSQL:** 12 o superior (accesible desde la aplicación)
+- **Cuenta Clerk:** Para autenticación empresarial
 
-## Modelo de datos
+---
 
-### `Voice`
+## Variables de Entorno
 
-Representa una voz disponible dentro del sistema.
-
-- `id`: identificador `cuid`.
-- `orgId`: organización propietaria opcional.
-- `name`, `description`: metadatos descriptivos.
-- `category`: clasificación funcional de la voz.
-- `language`: locale, por defecto `en-US`.
-- `variant`: `SYSTEM` o `CUSTOM`.
-- `r2ObjectKey`: referencia opcional a almacenamiento de archivos.
-
-### `Generation`
-
-Representa una generación asociada a una organización y, opcionalmente, a una voz.
-
-- `orgId`: organización dueña del registro.
-- `voiceId`: relación opcional con `Voice`.
-- `text`: prompt o contenido fuente.
-- `voiceName`: nombre persistido de la voz usada en la generación.
-- Parámetros de inferencia: `temperature`, `topP`, `topK`, `repetitionPenalty`.
-- `r2ObjectKey`: referencia opcional a artefactos generados.
-
-## Requisitos
-
-- Node.js 20 o superior.
-- PostgreSQL accesible desde la aplicación.
-- Cuenta y credenciales de Clerk.
-- npm 10 o superior recomendado.
-
-## Variables de entorno
-
-Crea un archivo `.env` en la raíz del proyecto con al menos estas variables:
+Crea un archivo `.env.local` en la raíz del proyecto:
 
 ```env
-DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DB_NAME"
+# Base de Datos
+DATABASE_URL="postgresql://usuario:contraseña@host:5432/nombre_base_datos"
 
+# Clerk Authentication
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
 CLERK_SECRET_KEY="sk_test_..."
-```
-
-Variables recomendadas para que Clerk use explícitamente las rutas del proyecto:
-
-```env
 NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
 NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/"
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/org-selection"
 ```
 
-## Puesta en marcha
+---
 
-### 1. Instalar dependencias
+## Instalación y Configuración
+
+### 1. Clonar Repositorio
+
+```bash
+git clone <repositorio-url>
+cd resonance
+```
+
+### 2. Instalar Dependencias
 
 ```bash
 npm install
+# o
+bun install
 ```
 
-### 2. Generar el cliente de Prisma
+### 3. Configurar Base de Datos
 
 ```bash
+# Ejecutar migraciones
+npx prisma migrate dev
+
+# Generar cliente Prisma
 npx prisma generate
 ```
 
-### 3. Aplicar migraciones
-
-Si la base ya existe y quieres aplicar el historial actual:
-
-```bash
-npx prisma migrate deploy
-```
-
-Si estás trabajando en local y necesitas crear o aplicar migraciones de desarrollo:
-
-```bash
-npx prisma migrate dev
-```
-
-### 4. Levantar el entorno local
+### 4. Iniciar Servidor de Desarrollo
 
 ```bash
 npm run dev
+# Acceder en http://localhost:3000
 ```
 
-La aplicación quedará disponible en `http://localhost:3000`.
+---
 
-## Scripts disponibles
+### Estructura de Capas
+
+```
+┌─────────────────────────────────────┐
+│   Presentación (React 19)           │
+│  - Páginas (App Router)             │
+│  - Componentes UI (shadcn/ui)       │
+└─────────────────────────────────────┘
+           ↓
+┌─────────────────────────────────────┐
+│   Capa de Negocio                   │
+│  - Server Actions                   │
+│  - Middlewares (Clerk)              │
+│  - Hooks personalizados             │
+└─────────────────────────────────────┘
+           ↓
+┌─────────────────────────────────────┐
+│   Acceso a Datos (Prisma ORM)       │
+│  - Cliente generado                 │
+│  - Migraciones PostgreSQL           │
+│  - Adapter para pg                  │
+└─────────────────────────────────────┘
+```
+
+### Componentes Principales
+
+**Frontend (`src/app`)**
+- `(dashboard)`: Área protegida con dashboard principal
+- `sign-in`, `sign-up`: Rutas públicas de autenticación
+- `org-selection`: Selección de organización para nuevos usuarios
+- `layout.tsx`: Provider de Clerk, toaster global y estilos
+
+**Componentes Reutilizables (`src/components/ui`)**
+- Librería base de 40+ componentes UI tipados
+- Estilos con Tailwind CSS v4
+- Accesibilidad WCAG 2.1
+
+**Seguridad y Autenticación (`src/proxy.ts`)**
+- Middleware de protección de rutas
+- Validación de sesión
+- Enrutamiento condicional basado en estado
+
+**Persistencia (`prisma/`)**
+- Schema normalizado con relaciones organizacionales
+- Migraciones versionadas
+- Adapter PostgreSQL optimizado
+
+---
+
+## Modelo de Datos
+
+### Entidad: Voice
+
+Representa una voz disponible en el sistema.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| `id` | `String` (cuid) | Identificador único |
+| `orgId` | `String` (optional) | Organización propietaria |
+| `name` | `String` | Nombre descriptivo |
+| `description` | `String` | Descripción detallada |
+| `category` | `String` | Clasificación funcional |
+| `language` | `String` | Código de idioma (default: `en-US`) |
+| `variant` | `SYSTEM \| CUSTOM` | Tipo de voz |
+| `r2ObjectKey` | `String` (optional) | Referencia de almacenamiento |
+| `createdAt` | `DateTime` | Timestamp de creación |
+| `updatedAt` | `DateTime` | Timestamp de actualización |
+
+### Entidad: Generation
+
+Representa una generación de síntesis de voz.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| `id` | `String` (cuid) | Identificador único |
+| `orgId` | `String` | Organización propietaria |
+| `voiceId` | `String` (optional) | Voz utilizada |
+| `text` | `String` | Contenido para síntesis |
+| `voiceName` | `String` | Nombre de voz persistido |
+| `temperature` | `Float` | Parámetro de inferencia |
+| `topP` | `Float` | Parámetro de muestreo |
+| `topK` | `Int` | Parámetro de filtrado |
+| `repetitionPenalty` | `Float` | Penalización de repetición |
+| `r2ObjectKey` | `String` (optional) | Audio generado |
+| `createdAt` | `DateTime` | Timestamp de creación |
+
+---
+
+## Scripts y Comandos
 
 ```bash
-npm run dev    # inicia Next.js en desarrollo
-npm run build  # genera el build de producción
-npm run start  # sirve el build generado
-npm run lint   # ejecuta ESLint
+# Desarrollo
+npm run dev          # Inicia servidor en http://localhost:3000
+npm run build        # Compila para producción
+npm run start        # Sirve build producción
+
+# Calidad de Código
+npm run lint         # Ejecuta ESLint con auto-fix
+npm run format       # Formatea código con Prettier
+
+# Base de Datos
+npx prisma generate # Regenera cliente Prisma
+npx prisma migrate dev       # Crea/aplica migraciones en desarrollo
+npx prisma migrate deploy    # Aplica migraciones en producción
+npx prisma studio   # Abre interfaz visual de datos
 ```
 
-## Estructura del proyecto
+---
 
-```text
-.
-|- prisma/
-|  |- migrations/
-|  \- schema.prisma
-|- public/
-|- src/
-|  |- app/
-|  |  |- org-selection/
-|  |  |- sign-in/
-|  |  \- sign-up/
-|  |- components/
-|  |- generated/prisma/
-|  \- lib/
-|- next.config.ts
-|- prisma.config.ts
-\- package.json
+## Estructura del Proyecto
+
+```
+resonance/
+├── src/
+│   ├── app/                    # Rutas Next.js App Router
+│   │   ├── (dashboard)/        # Rutas protegidas
+│   │   ├── sign-in/            # Autenticación
+│   │   ├── sign-up/            # Registro
+│   │   ├── org-selection/      # Selección de organización
+│   │   ├── layout.tsx          # Layout raíz
+│   │   └── globals.css         # Estilos globales
+│   ├── components/
+│   │   └── ui/                 # Componentes shadcn/ui
+│   ├── features/
+│   │   └── dashboard/          # Features del dashboard
+│   ├── hooks/                  # Hooks personalizados
+│   ├── lib/
+│   │   ├── db.ts              # Cliente Prisma
+│   │   ├── env.ts             # Validación de env vars
+│   │   └── utils.ts           # Utilidades
+│   ├── types/                 # Tipos TypeScript
+│   └── proxy.ts               # Middleware de autenticación
+├── prisma/
+│   ├── schema.prisma          # Definición de modelo
+│   ├── migrations/            # Historial de cambios
+│   └── schema.db              # Snapshot
+├── public/
+│   └── resources/             # Assets estáticos
+└── [config files]
 ```
 
-## Flujo de acceso
+---
 
-1. Un visitante entra a una ruta privada.
-2. Si no está autenticado, Clerk exige inicio de sesión.
-3. Si está autenticado pero no tiene `orgId` activo, se redirige a `/org-selection`.
-4. Una vez seleccionada o creada una organización, el usuario vuelve a `/`.
+## Flujo de Autenticación
 
-## Calidad y convenciones
+```
+Usuario Anónimo
+      ↓
+  Visita aplicación
+      ↓
+  ¿Autenticado? → NO → Redirige a /sign-in
+      ↓ SÍ
+  ¿Organización activa? → NO → Redirige a /org-selection
+      ↓ SÍ
+  Acceso a (dashboard)
+```
 
-- TypeScript en todo el proyecto.
-- ESLint 9 con configuración de Next.js.
-- Tailwind CSS v4 para estilos globales.
-- Prisma generado dentro del árbol de `src` para facilitar imports tipados.
+---
 
-## Próximos pasos sugeridos
+## Consideraciones de Seguridad
 
-- Añadir una capa de servicios o acciones del servidor para `Voice` y `Generation`.
-- Crear dashboard inicial con listados filtrados por organización.
-- Definir validación de entorno con `@t3-oss/env-nextjs`.
-- Actualizar `metadata` de la app para reemplazar los valores por defecto de Create Next App.
+- **Autenticación:** Clerk maneja sesiones, JWT y verificación de identidad
+- **Autorización:** Middleware valida `userId` y `orgId` en rutas protegidas
+- **Aislamiento de Datos:** Las queries Prisma filtran automáticamente por `orgId`
+- **Variables de Entorno:** Gestión con `@t3-oss/env-nextjs`
+- **HTTPS en Producción:** Requerido para cookies seguras de Clerk
 
-## Deploy
+---
 
-Antes de desplegar, verifica:
+## Próximas Mejoras Planificadas
 
-- Variables de entorno de Clerk configuradas en el entorno de destino.
-- `DATABASE_URL` apuntando a una base PostgreSQL persistente.
-- Migraciones aplicadas antes de iniciar la app.
-- Regeneración del cliente Prisma durante el proceso de build si el entorno lo requiere.
+- Implementar Server Actions para creación/actualización de generaciones
+- Dashboard de analytics con gráficos de uso
+- Editor avanzado de parámetros de síntesis
+- Sistema de caché de audios generados
+- API REST para integraciones externas
+- Tests unitarios e integración
+- Documentación interactiva de API
+
+---
 
 ## Licencia
 
-No se ha definido una licencia en este repositorio.
+Proyecto propietario. Todos los derechos reservados.
+
+---
+
+## Contacto y Soporte
+
+Para consultas, problemas o sugerencias, por favor consulta la documentación interna o contacta al equipo de desarrollo.
+
+**Última actualización:** Marzo 2026

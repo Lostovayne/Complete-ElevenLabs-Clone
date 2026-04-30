@@ -15,7 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-  SidebarTrigger
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -28,7 +28,7 @@ import {
   Home,
   LayoutGrid,
   Settings,
-  Volume2
+  Volume2,
 } from "lucide-react";
 
 interface MenuItem {
@@ -95,35 +95,35 @@ export function DashboardSidebar() {
     {
       title: "Dashboard",
       url: "/",
-      icon: Home
+      icon: Home,
     },
     {
       title: "Explore voices",
       url: "/voices",
-      icon: LayoutGrid
+      icon: LayoutGrid,
     },
     {
       title: "Text to speech",
       url: "/text-to-speech",
-      icon: AudioLines
+      icon: AudioLines,
     },
     {
       title: "Voice cloning",
-      icon: Volume2
-    }
+      icon: Volume2,
+    },
   ];
 
   const otherMenuItems: MenuItem[] = [
     {
       title: "Settings",
       icon: Settings,
-      onClick: () => clerk.openOrganizationProfile()
+      onClick: () => clerk.openOrganizationProfile(),
     },
     {
       title: "Help & Support",
       url: "mailto:business@deuslovult.com",
-      icon: Headphones
-    }
+      icon: Headphones,
+    },
   ];
 
   return (
@@ -133,6 +133,7 @@ export function DashboardSidebar() {
           <Image
             src="/logo.svg"
             alt="Resonance Logo"
+            loading="eager"
             width={24}
             height={24}
             className="rounded-sm"
@@ -156,14 +157,17 @@ export function DashboardSidebar() {
                     "w-full! group-data-[collapsible=icon]:w-auto! group-data-[collapsible=icon]:flex! group-data-[collapsible=icon]:justify-center!",
                   organizationSwitcherTrigger:
                     "w-full! justify-between! bg-white! border! border-border! rounded-md! pl-1! pr-2! py-1! gap-3! group-data-[collapsible=icon]:w-auto! group-data-[collapsible=icon]:p-1! shadow-[0px_1px_1px_0px_rgba(44,54,53,0.03)]!",
+                  organizationSwitcherPopoverCard: "z-[10000]! pointer-events-auto!",
+                  organizationSwitcherPopoverActions: "pointer-events-auto!",
+                  organizationSwitcherPopoverActionButton: "pointer-events-auto!",
                   organizationPreview: "gap-2!",
                   organizationPreviewAvatarBox: "size-6! rounded-sm!",
                   organizationPreviewTextContainer:
                     "text-xs! tracking-tight! font-medium! text-foreground! group-data-[collapsible=icon]:hidden!",
                   organizationPreviewMainIdentifier: "text-[13px]!",
                   organizationSwitcherTriggerIcon:
-                    "size-4! text-sidebar-foreground! group-data-[collapsible=icon]:hidden!"
-                }
+                    "size-4! text-sidebar-foreground! group-data-[collapsible=icon]:hidden!",
+                },
               }}
             />
           </SidebarMenuItem>
@@ -196,8 +200,8 @@ export function DashboardSidebar() {
                   userButtonBox: "flex-row-reverse! gap-2!",
                   userButtonOuterIdentifier:
                     "text-[13px]! tracking-tight! font-medium! text-foreground! pl-0! group-data-[collapsible=icon]:hidden!",
-                  userButtonAvatarBox: "size-6!"
-                }
+                  userButtonAvatarBox: "size-6!",
+                },
               }}
             />
           </SidebarMenuItem>
